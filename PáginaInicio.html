@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body 
+        {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            color: #333;
+        }
+        .button {
+            background-color: hwb(340 16% 0%);
+            color: white;
+            display: inline-block;
+            padding: 12px 1px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            position: relative;
+        }
+        .button:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .button:active .front {
+            transform: translateY(-2px);
+        }
+        .button:active{
+            transform: translateY(-2px) scale(1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .button:focus:not(:focus-visible){
+            outline:none;
+        }
+        .front{
+            display: block;
+            padding:6px 8px;
+            border-radius:12px;
+            font-size:1.25rem;
+            background:hwb(340 16% 0%);
+            color:white;
+            will-change:transform;
+            transition:transform 250ms;
+            transform: translateY(-6px);
+        }
+        .principal-page {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .principal-page:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+
+    </style>
+
+<div class="principal-page" id="principal-page">
+    <h1>What do you want to do now?</h1>
+    <a href="EnglishCard2.html"class="button">English Cards</a>
+    <a href="Resources.html" class="button">Resources</a>
+</div>
+    
+</body>
+</html>
