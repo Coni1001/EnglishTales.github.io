@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioBooks</title>
+</head>
+<body>
+    <style>
+        body 
+        {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding:0;
+            flex-direction: column;
+            color: #333;
+            height:100%;
+        }
+
+        .button {
+            background-color: hwb(340 16% 0%);
+            color: white;
+            display: inline-block;
+            padding: 12px 5px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            position: relative;
+        }
+        .button:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .button:active .front {
+            transform: translateY(-2px);
+        }
+        .button:active{
+            transform: translateY(-2px) scale(1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .button:focus:not(:focus-visible){
+            outline:none;
+        }
+        .front{
+            display: block;
+            padding:6px 8px;
+            border-radius:12px;
+            font-size:1.25rem;
+            background:hwb(340 16% 0%);
+            color:white;
+            will-change:transform;
+            transition:transform 250ms;
+            transform: translateY(-6px);
+        }
+        #pantalla-inicial{
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        margin:auto;
+        text-align:center;
+        background: rgba(255,255,255,.7);
+        padding:30px;
+        border:2px solid #000;
+        border-radius: 20px;
+        position:relative;
+   }
+        #pantalla-inicial h1{
+        font-family:"Times New Roman",serif;
+        font-size:50px;
+        color:black;
+   }
+   #pantalla-inicial h3 {
+        font-size: 20px;
+        color: #555;
+    }
+    .video-gallery{
+        display:grid;
+        grid-template-columns: repeat(4, 1fr);
+        overflow-x: auto;
+        gap: 20px;
+        padding:20px;
+        margin-top: 20px;
+        box-sizing: border-box; 
+   }
+   .video {
+        flex-shrink: 0; /* Para evitar que los videos se reduzcan */
+        width: 200px; /* Ajuste de tamaño para que los videos no sean tan grandes */
+    }
+   .video video {
+            width: 100%;
+            height:auto;
+            border-radius: 8px;
+    }
+   .video h3{
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: #333;
+   }
+    
+    .video-gallery::-webkit-scrollbar {
+        height:8px;
+    }
+    .video-gallery::-webkit-scrollbar-thumb{
+        background-color: hwb(340 16% 0%); /* Color de la barra */
+        border-radius: 4px;
+    }
+    .video-gallery::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(342, 100%, 71%); /* Color cuando el ratón pasa sobre la barra */
+    }
+    .icon {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+
+    }
+    .icon-link{
+        display:inline-block;
+        transition:transform 0.3s, color 0.3s ease;
+    }
+    .icon-link:hover .icon {
+     transform: scale(1.1); /* Escala el ícono al 110% */
+    filter: brightness(1.2); /* Aumenta el brillo */
+   }
+    .dropdown{
+        position:relative;
+        display:inline-block;
+        margin-top:25px;
+    }
+    .dropdown-content{
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+    }
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+            display: block;
+    }
+    </style>
+    <body>
+        
+    <section id="pantalla-inicial">
+        <a href="PáginaInicio.html" class="button" >Back to the main page</button></a>
+        <a href="Resources.html" class="button">Back to resources</a>
+        <h1>English language resources</h1>
+        <h3>Books, english videos, scientific articles and more</h3>
+    
+    <div class="dropdown" >
+        <button class="button" onclick="Search_by_category()">Search by category</button>
+          <div class="dropdown-content">
+            <a href="#" onclick="filterVideos('Books')">Books</a>
+            <a href="#" onclick="filterVideos('Music')">Music</a>
+            <a href="#"onclick="filterVideos('Articles')">Articles</a>
+          </div>
+    </div>  
+        
+
+    <div class="video-gallery">
+    <div class="video" data-category="Books">
+        <a href="TheHappyPrinceBook.html" class="icon-link">
+        <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+            <h3>The happy prince, Oscar Wilde</h3>
+    </div>
+    <div class="video" data-category="Articles">
+        <a href="The NightingaleandtheRose.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+            <h3>The nightingale and the Rose, by Oscar Wilde</h3>
+    </div>
+    <div class="video" data-category="Music">
+        <a href="Eleonor Rigby.html" class="icon-link">
+            <img src="images\musicIcon.png" alt="Icono" class="icon">
+        </a>
+            <h3>Eleanor Rigby-The Beatles</h3>
+    </div>
+    <div class="video" data-category="Articles">
+            <a href="Extensions\The Devoted Friend.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+            <h3>The Devoted Friend, by Oscar Wilde.</h3>
+    </div>
+    <div class="video" data-category="Books">
+        <a href="TheHorrorOfTheHeights.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+        <h3>The horror of the heights, by Arthur Conan Doyle </h3>
+    </div>
+    <div class="video" data-category="Books">
+        <a href="AnImaginativeWoman.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+            <h3>An imaginative woman, by Thomas Hardy</h3>
+    </div>
+    <div class="video" data-category="Books">
+        <a href="The Red-headed League.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+        </a>
+            <h3>The red-headed league, by Arthur Conan Doyle</h3>
+    </div>
+    <div class="video" data-category="Books">
+    <a href="TheFiveOrangePips.html" class="icon-link">
+            <img src="images\iconBook.png" alt="Icono" class="icon">
+    </a>
+            <h3>The five orange pips, by Arthur Conan Doyle</h3>
+    </div>
+
+   <div class="video" data-category="Books">
+     <a href="TheTerrorofBlueJohnGap.html" class="icon-link">
+           <img src="images\iconBook.png" alt="Icono" class="icon"></a>
+           <h3>The Terror of Blue John Gap, by Arthur Conan Doyle</h3>
+    </div>
+
+    <div class="video" data-category="Books">
+          <a href="TheCaseofLadySannox.html" class="icon-link">
+          <img src="images\iconBook.png" alt="Icono" class="icon">
+    </a>
+    <h3>The Case of Lady Sannox, by Arthur Conan Doyle</h3>
+    </div>
+
+    </div>
+</section>
+<script>
+    function filterVideos(category) {
+        // Obtener todos los vídeos
+        const videos = document.querySelectorAll('.video');
+        
+        // Recorrer los vídeos y mostrarlos o esconderlos según su categoría
+        videos.forEach(function(video) {
+            if (video.getAttribute('data-category') === category || category === 'all') {
+                video.style.display = 'block';  // Mostrar el vídeo
+            } else {
+                video.style.display = 'none';  // Ocultar el vídeo
+            }
+        });
+    }
+</script>
+</body>
+</html>

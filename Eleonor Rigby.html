@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioBooks</title>
+</head>
+<body>
+    <style>
+        body 
+        {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding:0;
+            flex-direction: column;
+            color: #333;
+            height:100%;
+        }
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .button {
+            background-color: hwb(340 16% 0%);
+            color: white;
+            display: inline-block;
+            padding: 12px 5px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            position: relative;
+        }
+        .button:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .button:active .front {
+            transform: translateY(-2px);
+        }
+        .button:active{
+            transform: translateY(-2px) scale(1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .button:focus:not(:focus-visible){
+            outline:none;
+        }
+        .front{
+            display: block;
+            padding:6px 8px;
+            border-radius:12px;
+            font-size:1.25rem;
+            background:hwb(340 16% 0%);
+            color:white;
+            will-change:transform;
+            transition:transform 250ms;
+            transform: translateY(-6px);
+        }
+        #Banner {
+            margin: 50px auto;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border: 2px solid #000;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .icono {
+            width: 50px;
+            height: 50px;
+        }
+        .content {
+            margin: 50px auto;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border: 2px solid #000;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        #container-words {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid #000;
+    border-radius:20px;
+}
+
+#container-words p {
+    margin: 0;
+}
+.deleteButton{
+margin:"10px";
+ background-color:"red";
+ color: "white";
+ border:"none";
+cursor:"pointer";
+
+}
+    </style>
+    <body>
+        <section id="Banner">
+            <a href="Resources.html" class="button">Back to resources</a>
+        <div class="content-container">
+            <h1>Eleanor Rigby- The Beatles</h1>
+            <img src="images\iconBook.png" alt="Icono" class="icono">
+        </section>
+        <div class="content">
+Ah, look at all the lonely people<br>
+Ah, look at all the lonely people<p>
+Eleanor Rigby<br>
+Picks up the rice in the church where a wedding has been<br>
+Lives in a dream<br>
+Waits at the window<br>
+Wearing the face that she keeps in a jar by the door<br>
+Who is it for?<p>
+All the lonely people<br>
+Where do they all come from?<br>
+All the lonely people<br>
+Where do they all belong?<p>
+Father McKenzie<br>
+Writing the words of a sermon that no one will hear<br>
+No one comes near<br>
+Look at him working<br>
+Darning his socks in the night when there's nobody there<br>
+What does he care?<p>
+All the lonely people<br>
+Where do they all come from?<br>
+All the lonely people<br>
+Where do they all belong?<p>
+All the lonely people (All the lonely people)<br>
+All the lonely people (All the lonely people)<br>
+All the lonely people (All the lonely people)<p>
+Eleanor Rigby died in the church and was buried along with her name<br>
+Nobody came<br>
+Father McKenzie<br>
+Wiping the dirt from his hands as he walks from the grave<br>
+No one was saved<p>
+All the lonely people all the lonely people
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+(Ah, look at all the lonely people)<br>
+        </div>
+        <div id="container-words">
+            <h2>Selected words:</h2>
+        </div>
+        </body>
+         <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentContent = 1;  // Asumimos que se selecciona 'content1' en este caso
+            const container = document.getElementById('container-words');
+            const textContent = document.getElementById(`content${currentContent}`);
+        
+            // Función para cargar las palabras desde localStorage
+            function loadSavedWords() {
+                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+                savedWords.forEach((word, index) => {
+                    let wordElement = createWordElement(word, index);
+                    container.appendChild(wordElement);
+                });
+            }
+        
+            // Función para crear un nuevo elemento de palabra
+            function createWordElement(word, index) {
+                const wordElement = document.createElement('p');
+                wordElement.textContent = word;
+        
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+        
+                // Añadir evento de clic para eliminar
+                deleteButton.addEventListener('click', function() {
+                    removeWord(index);
+                    wordElement.remove();  // Eliminar el elemento de la página
+                });
+        
+                wordElement.appendChild(deleteButton);
+                return wordElement;
+            }
+        
+            // Guardar las palabras seleccionadas en localStorage
+            function saveSelectedWords(words) {
+                localStorage.setItem('selectedWords', JSON.stringify(words));
+            }
+        
+            // Eliminar una palabra de la lista
+            function removeWord(index) {
+                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+                savedWords.splice(index, 1);  // Eliminar la palabra en el índice especificado
+                saveSelectedWords(savedWords);  // Guardar la lista actualizada
+            }
+        
+            // Función que detecta la selección de texto
+            function getSelectedText() {
+                let selectedText = "";
+        
+                // Si hay una selección de texto
+                if (window.getSelection) {
+                    selectedText = window.getSelection().toString();
+                } else if (document.selection && document.selection.type != "Control") {
+                    selectedText = document.selection.createRange().text;
+                }
+        
+                return selectedText;
+            }
+        
+            // Evento para capturar la selección de texto
+            textContent.addEventListener('mouseup', function() {
+                let selectedText = getSelectedText();  // Obtener el texto seleccionado
+                if (selectedText) {
+                    const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+        
+                    // Añadir la nueva palabra seleccionada
+                    savedWords.push(selectedText);
+        
+                    // Guardar nuevamente en localStorage
+                    saveSelectedWords(savedWords);
+        
+                    // Crear el elemento para la palabra seleccionada y agregarlo al contenedor
+                    let wordElement = createWordElement(selectedText, savedWords.length - 1);
+                    container.appendChild(wordElement);
+                }
+            });
+        
+            // Cargar las palabras guardadas cuando la página se cargue
+            loadSavedWords();
+        });
+        
+        
+        </script>
+        </body>
+        </html>
