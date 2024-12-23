@@ -355,28 +355,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return selectedText;
     }
+    function handleSelection() {
+            let selectedText = getSelectedText();  // Obtener el texto seleccionado
+            if (selectedText) {
+                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
 
-    // Evento para capturar la selección de texto
-    textContent.addEventListener('mouseup', function() {
-        let selectedText = getSelectedText();  // Obtener el texto seleccionado
-        if (selectedText) {
-            const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+                // Añadir la nueva palabra seleccionada
+                savedWords.push(selectedText);
 
-            // Añadir la nueva palabra seleccionada
-            savedWords.push(selectedText);
-
-            // Guardar nuevamente en localStorage
-            saveSelectedWords(savedWords);
-
-            // Crear el elemento para la palabra seleccionada y agregarlo al contenedor
-            let wordElement = createWordElement(selectedText, savedWords.length - 1);
-            container.appendChild(wordElement);
+                // Guardar nuevamente en localStorage
+                saveSelectedWords(savedWords);
+                 // Crear el elemento para la palabra seleccionada y agregarlo al contenedor
+                 let wordElement = createWordElement(selectedText, savedWords.length - 1);
+                container.appendChild(wordElement);
+            }
         }
-    });
 
-    // Cargar las palabras guardadas cuando la página se cargue
-    loadSavedWords();
-});
+     // Añadir los eventos tanto para click (computadora) como para touch (móvil)
+     textContent.addEventListener('mouseup', handleSelection);  // Evento para computadora
+        textContent.addEventListener('touchend', handleSelection); // Evento para móvil
+
+        // Cargar las palabras guardadas cuando la página se cargue
+        loadSavedWords();
+    });
 
 
 </script>
