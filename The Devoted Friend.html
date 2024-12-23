@@ -407,110 +407,111 @@ cursor:"pointer";
         
         </div>
         <script>
-        
-            let currentContent = 1; // Empieza mostrando el contenido 1
-        
-        function mostrarTarjetaAnterior() {
-            if (currentContent > 1) {
-                document.getElementById(`content${currentContent}`).style.display = "none";
-                currentContent--;
-                document.getElementById(`content${currentContent}`).style.display = "block";
-            }
-        }
-        
-        function mostrarTarjetaSiguiente() {
-            if (currentContent <9) {  // Cambia 2 a la cantidad total de contenidos
-                document.getElementById(`content${currentContent}`).style.display = "none";
-                currentContent++;
-                document.getElementById(`content${currentContent}`).style.display = "block";
-            }
-        }
-        
-        // Inicializar el primer contenido visible
-        document.getElementById("content1").style.display = "block";
-        document.getElementById("content2").style.display = "none";
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentContent = 1;  // Asumimos que se selecciona 'content1' en este caso
-            const container = document.getElementById('container-words');
-            const textContent = document.getElementById(`content${currentContent}`);
-        
-            // Función para cargar las palabras desde localStorage
-            function loadSavedWords() {
-                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
-                savedWords.forEach((word, index) => {
-                    let wordElement = createWordElement(word, index);
-                    container.appendChild(wordElement);
-                });
-            }
-        
-            // Función para crear un nuevo elemento de palabra
-            function createWordElement(word, index) {
-                const wordElement = document.createElement('p');
-                wordElement.textContent = word;
-        
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Eliminar';
-        
-                // Añadir evento de clic para eliminar
-                deleteButton.addEventListener('click', function() {
-                    removeWord(index);
-                    wordElement.remove();  // Eliminar el elemento de la página
-                });
-        
-                wordElement.appendChild(deleteButton);
-                return wordElement;
-            }
-        
-            // Guardar las palabras seleccionadas en localStorage
-            function saveSelectedWords(words) {
-                localStorage.setItem('selectedWords', JSON.stringify(words));
-            }
-        
-            // Eliminar una palabra de la lista
-            function removeWord(index) {
-                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
-                savedWords.splice(index, 1);  // Eliminar la palabra en el índice especificado
-                saveSelectedWords(savedWords);  // Guardar la lista actualizada
-            }
-        
-            // Función que detecta la selección de texto
-            function getSelectedText() {
-                let selectedText = "";
-        
-                // Si hay una selección de texto
-                if (window.getSelection) {
-                    selectedText = window.getSelection().toString();
-                } else if (document.selection && document.selection.type != "Control") {
-                    selectedText = document.selection.createRange().text;
-                }
-        
-                return selectedText;
-            }
-        
-            // Evento para capturar la selección de texto
-            textContent.addEventListener('mouseup', function() {
-                let selectedText = getSelectedText();  // Obtener el texto seleccionado
-                if (selectedText) {
-                    const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
-        
-                    // Añadir la nueva palabra seleccionada
-                    savedWords.push(selectedText);
-        
-                    // Guardar nuevamente en localStorage
-                    saveSelectedWords(savedWords);
-        
-                    // Crear el elemento para la palabra seleccionada y agregarlo al contenedor
-                    let wordElement = createWordElement(selectedText, savedWords.length - 1);
-                    container.appendChild(wordElement);
-                }
-            });
-        
-            // Cargar las palabras guardadas cuando la página se cargue
-            loadSavedWords();
+
+    let currentContent = 1; // Empieza mostrando el contenido 1
+
+function mostrarTarjetaAnterior() {
+    if (currentContent > 1) {
+        document.getElementById(`content${currentContent}`).style.display = "none";
+        currentContent--;
+        document.getElementById(`content${currentContent}`).style.display = "block";
+    }
+}
+
+function mostrarTarjetaSiguiente() {
+    if (currentContent <4) {  // Cambia 2 a la cantidad total de contenidos
+        document.getElementById(`content${currentContent}`).style.display = "none";
+        currentContent++;
+        document.getElementById(`content${currentContent}`).style.display = "block";
+    }
+}
+
+// Inicializar el primer contenido visible
+document.getElementById("content1").style.display = "block";
+document.getElementById("content2").style.display = "none";
+
+document.addEventListener('DOMContentLoaded', function() {
+    const currentContent = 1;  // Asumimos que se selecciona 'content1' en este caso
+    const container = document.getElementById('container-words');
+    const textContent = document.getElementById(`content${currentContent}`);
+
+    // Función para cargar las palabras desde localStorage
+    function loadSavedWords() {
+        const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+        savedWords.forEach((word, index) => {
+            let wordElement = createWordElement(word, index);
+            container.appendChild(wordElement);
         });
-        
-        
-        </script>
-        </body>
-        </html>
+    }
+
+    // Función para crear un nuevo elemento de palabra
+    function createWordElement(word, index) {
+        const wordElement = document.createElement('p');
+        wordElement.textContent = word;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Eliminar';
+
+        // Añadir evento de clic para eliminar
+        deleteButton.addEventListener('click', function() {
+            removeWord(index);
+            wordElement.remove();  // Eliminar el elemento de la página
+        });
+
+        wordElement.appendChild(deleteButton);
+        return wordElement;
+    }
+
+    // Guardar las palabras seleccionadas en localStorage
+    function saveSelectedWords(words) {
+        localStorage.setItem('selectedWords', JSON.stringify(words));
+    }
+
+    // Eliminar una palabra de la lista
+    function removeWord(index) {
+        const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+        savedWords.splice(index, 1);  // Eliminar la palabra en el índice especificado
+        saveSelectedWords(savedWords);  // Guardar la lista actualizada
+    }
+
+    // Función que detecta la selección de texto
+    function getSelectedText() {
+        let selectedText = "";
+
+        // Si hay una selección de texto
+        if (window.getSelection) {
+            selectedText = window.getSelection().toString();
+        } else if (document.selection && document.selection.type != "Control") {
+            selectedText = document.selection.createRange().text;
+        }
+
+        return selectedText;
+    }
+    function handleSelection() {
+            let selectedText = getSelectedText();  // Obtener el texto seleccionado
+            if (selectedText) {
+                const savedWords = JSON.parse(localStorage.getItem('selectedWords')) || [];
+
+                // Añadir la nueva palabra seleccionada
+                savedWords.push(selectedText);
+
+                // Guardar nuevamente en localStorage
+                saveSelectedWords(savedWords);
+                 // Crear el elemento para la palabra seleccionada y agregarlo al contenedor
+                 let wordElement = createWordElement(selectedText, savedWords.length - 1);
+                container.appendChild(wordElement);
+            }
+        }
+
+     // Añadir los eventos tanto para click (computadora) como para touch (móvil)
+     textContent.addEventListener('mouseup', handleSelection);  // Evento para computadora
+        textContent.addEventListener('touchend', handleSelection); // Evento para móvil
+
+        // Cargar las palabras guardadas cuando la página se cargue
+        loadSavedWords();
+    });
+
+
+</script>
+</body>
+</html>
